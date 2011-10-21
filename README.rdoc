@@ -1,3 +1,19 @@
-= custom_field_extender
+= Custom Field Extender
 
-Description goes here
+Redmine plugin, that extends existing custom field type list. Now we can add any needed logic in custom field behavior.
+
+Now only autoincrement is realized.
+
+= Installation
+
+1. Download the sources and put them to your vendor/plugin directory
+2. Restart your server
+No migrations needed. Plugin uses Redmine logic to store custom custom_fields
+
+= Translation
+
+Only english and russian translations are available now.
+
+= Changelog
+
+0.1 This is initial version of plugin

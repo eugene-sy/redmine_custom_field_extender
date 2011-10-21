@@ -1,0 +1,9 @@
+= Development Guide
+
+To add new custom field you have to:
+1. In init.rb file add new type of field in CustomFieldFormat.map
+2. In CustomFieldFormatPatch define new format_as method
+3. In CustomFieldPatch define cast_value and order method behavior
+4. In CustomFieldHelperPatch define rendering behavior 
+5. In before_save hooks define methods to control logic of new custom field
+6. Save and test it!

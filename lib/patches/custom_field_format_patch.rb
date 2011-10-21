@@ -14,8 +14,8 @@ module RedmineCustomFieldExtender
       end
 
       module ClassMethods
-		#fix for error while sending emails
-		def format_value_with_extended(value, field_format)
+		    #fix for error while sending emails
+		    def format_value_with_extended(value, field_format)
           return "" unless value && !value.blank?
 
           if format_type = find_by_name(field_format)

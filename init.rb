@@ -11,9 +11,8 @@ Redmine::Plugin.register :redmine_custom_field_extender do
   name 'Redmine Custom Field Extender plugin'
   author 'Eugene Sypachev'
   description 'This is a plugin for Redmine'
-  version '0.0.1'
-  #url 'http://example.com/path/to/plugin'
-  #author_url 'http://example.com/about'
+  version '0.1'
+  
 
   # extend CustomFieldFormat map
   Redmine::CustomFieldFormat.map do |fields|
