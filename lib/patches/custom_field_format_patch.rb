@@ -7,11 +7,24 @@ module RedmineCustomFieldExtender
         base.send(:include, InstanceMethods)
         base.class_eval do
           #  Never do it unloadable!
+		  class << self
+            alias_method_chain :format_value, :extended
+          end
         end
       end
 
       module ClassMethods
+		#fix for error while sending emails
+		def format_value_with_extended(value, field_format)
+          return "" unless value && !value.blank?
 
+          if format_type = find_by_name(field_format)
+            format_type.format(value)
+          else
+            value
+          end
+        end
+		
       end
 
       module InstanceMethods
