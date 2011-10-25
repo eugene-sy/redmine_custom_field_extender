@@ -8,11 +8,13 @@ module RedmineCustomFieldExtender
     # else value of field is saved without any changes
     def self.process(context={})
       field_values = context[:issue].custom_values
+      project = Project.find_by_id(context[:issue].project_id)
+      project_issues = Issue.find_all_by_project_id(project.id)
       field_values.each do |f|
         custom_field = CustomField.find_by_id(f.custom_field_id)
         if custom_field.field_format.eql?("autoincrement")
-          puts "Custom field #{custom_field.id} is autoincrement"
-          field_values = CustomValue.find(:all, :conditions => {:custom_field_id => custom_field.id})
+          #puts "Custom field #{custom_field.id} is autoincrement"
+          field_values = CustomValue.find(:all, :conditions => {:custom_field_id => custom_field.id, :customized_id => project_issues})
           max_value = 0
           field_values.each do |fv|
             max_value = (fv.value.to_i > max_value) ? fv.value.to_i : max_value
