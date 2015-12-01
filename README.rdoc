@@ -12,7 +12,7 @@ No migrations needed. Plugin uses Redmine logic to store custom custom_fields
 
 = Translation
 
-Only english and russian translations are available now.
+English, german and russian translations are available now.
 
 = Changelog
 
