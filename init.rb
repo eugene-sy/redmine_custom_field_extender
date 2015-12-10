@@ -1,5 +1,5 @@
 require 'redmine'
-require 'dispatcher'
+require 'dispatcher' unless Rails::VERSION::MAJOR >= 3
 require 'patches/custom_field_patch'
 require 'patches/custom_fields_helper_patch'
 require 'patches/custom_field_format_patch'
@@ -14,17 +14,20 @@ Redmine::Plugin.register :redmine_custom_field_extender do
   version '0.1.1'
   url 'https://github.com/Axblade/redmine_custom_field_extender'
   author_url 'http://www.redmine.org/users/35480'
-  
 
-  # extend CustomFieldFormat map
-  Redmine::CustomFieldFormat.map do |fields|
-    fields.register Redmine::CustomFieldFormat.new('autoincrement', :label => :label_autoincrement, :only => %w(Issue), :order => 10)
-  end
+  if Rails::VERSION::MAJOR >= 3
 
-  # redmine class patches registration
-  Dispatcher.to_prepare :redmine_custom_field_extender do
-    CustomField.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldPatch)
-    CustomFieldsHelper.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldsHelperPatch)
-    Redmine::CustomFieldFormat.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldFormatPatch)
+  else
+    # extend CustomFieldFormat map
+    Redmine::CustomFieldFormat.map do |fields|
+      fields.register Redmine::CustomFieldFormat.new('autoincrement', :label => :label_autoincrement, :only => %w(Issue), :order => 10)
+    end
+
+    # redmine class patches registration
+    Dispatcher.to_prepare :redmine_custom_field_extender do
+      CustomField.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldPatch)
+      CustomFieldsHelper.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldsHelperPatch)
+      Redmine::CustomFieldFormat.send(:include, RedmineCustomFieldExtender::Patches::CustomFieldFormatPatch)
+    end
   end
 end
